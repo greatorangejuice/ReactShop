@@ -7,11 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import {Product} from "models/Product";
-import {formatAsPrice} from "utils/utils";
 import AddProductToCart from "components/AddProductToCart/AddProductToCart";
 import axios from "axios";
 import API_PATHS from "../../../../constants/apiPaths";
 import catLogo from "../../../../images/cat-icon-black.png"
+import {formatAsPrice} from "utils/utils";
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -37,9 +37,8 @@ export default function Products() {
 
     useEffect(() => {
         axios.get(`${API_PATHS.bff}/products`)
-            .then(res => setProducts(res.data.cats));
+            .then(res => setProducts(res.data.products));
         // setProducts(productList);
-        console.log(products)
     }, [])
 
     return (
@@ -49,18 +48,18 @@ export default function Products() {
                     <Card className={classes.card}>
                         <CardMedia
                             className={classes.cardMedia}
-                            image={product.imgLink}
+                            image={product.imglink}
                             title="Image title"
                         />
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom variant="h5" component="h2">
                                 <div className='catName'>
                                     <img src={catLogo} alt="cat-icon"/>
-                                    {product.name}
+                                    {product.title}
                                 </div>
                             </Typography>
                             <Typography>
-                                {product.breed}
+                                {product.description}
                             </Typography>
                             <Typography>
                                 {formatAsPrice(product.price)}
